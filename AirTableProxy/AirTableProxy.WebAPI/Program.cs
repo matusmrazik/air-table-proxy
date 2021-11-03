@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace AirTableProxy
+namespace AirTableProxy.WebAPI
 {
     public class Program
     {

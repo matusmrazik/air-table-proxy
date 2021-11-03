@@ -1,4 +1,4 @@
-﻿namespace AirTableProxy
+﻿namespace AirTableProxy.WebAPI
 {
     public class ServiceConfiguration
     {

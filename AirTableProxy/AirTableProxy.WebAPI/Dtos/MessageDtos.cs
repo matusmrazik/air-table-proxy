@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AirTableProxy.Dtos.AirTable
+namespace AirTableProxy.WebAPI.Dtos.MessageDtos
 {
     public record GetMessagesRequest(int? MaxCount);
 

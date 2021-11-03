@@ -1,18 +1,19 @@
-﻿using AirTableProxy.Dtos.AirTable;
+﻿using AirTableProxy.WebAPI.Business;
+using AirTableProxy.WebAPI.Dtos.MessageDtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AirTableProxy.Controllers
+namespace AirTableProxy.WebAPI.Controllers
 {
     [ApiController]
     [Route("messages")]
     [Produces("application/json")]
     public class MessagesController
     {
-        private readonly AirTableClient _client;
+        private readonly IAirTableClient _client;
 
-        public MessagesController(AirTableClient client)
+        public MessagesController(IAirTableClient client)
         {
             _client = client;
         }

@@ -1,4 +1,5 @@
-﻿using AirTableProxy.Dtos.AirTable;
+﻿using AirTableProxy.WebAPI.Business.Dtos.AirTableDtos;
+using AirTableProxy.WebAPI.Dtos.MessageDtos;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using System.Net.Http.Json;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace AirTableProxy
+namespace AirTableProxy.WebAPI.Business
 {
-    public class AirTableClient
+    class AirTableClient : IAirTableClient
     {
         private readonly ServiceConfiguration _config;
         private readonly HttpClient _httpClient;
@@ -31,19 +32,12 @@ namespace AirTableProxy
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public record MessageInfoDto(string Id, string Summary, string Message, DateTime? ReceivedAt);
-
-        public record MessageResponseDto(string Id, MessageInfoDto Fields, DateTime CreatedTime);
-
-        public record MessageRequestDto(MessageInfoDto Fields);
-
-        public record MessagesResponseDto(IEnumerable<MessageResponseDto> Records);
-
-        public record MessagesRequestDto(IEnumerable<MessageRequestDto> Records);
-
         public async Task<IEnumerable<MessageResponse>> GetMessages(GetMessagesRequest request)
         {
-            var response = await _httpClient.GetFromJsonAsync<MessagesResponseDto>($"https://api.airtable.com/v0/{_config.AirTableAppId}/Messages?maxRecords={request.MaxCount ?? 3}&view=Grid%20view");
+            var maxCount = request.MaxCount.HasValue ? $"maxRecords={request.MaxCount.Value}&" : "";
+            var response = await _httpClient.GetFromJsonAsync<MessagesResponseDto>(
+                $"https://api.airtable.com/v0/{_config.AirTableAppId}/Messages?{maxCount}&view=Grid%20view"
+            );
             return response.Records.Select(rec => new MessageResponse(
                 Id: rec.Fields.Id,
                 Title: rec.Fields.Summary,
