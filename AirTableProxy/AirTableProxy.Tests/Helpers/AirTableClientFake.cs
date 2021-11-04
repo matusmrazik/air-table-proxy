@@ -1,5 +1,6 @@
 ﻿using AirTableProxy.WebAPI.Business;
 using AirTableProxy.WebAPI.Dtos.MessageDtos;
+using AirTableProxy.WebAPI.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace AirTableProxy.Tests.Helpers
         public Task<MessageResponse> AddMessage(MessageRequest message)
         {
             var response = new MessageResponse(
-                Id: "1", // TODO generate ID and test it
+                Id: UniqueIdGenerator.Generate(),
                 Title: message.Title,
                 Text: message.Text,
                 ReceivedAt: DateTime.Now

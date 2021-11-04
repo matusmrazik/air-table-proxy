@@ -2,7 +2,7 @@ using AirTableProxy.Tests.Helpers;
 using AirTableProxy.WebAPI.Business;
 using AirTableProxy.WebAPI.Controllers;
 using AirTableProxy.WebAPI.Dtos.MessageDtos;
-using System;
+using AirTableProxy.WebAPI.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -49,6 +49,7 @@ namespace AirTableProxy.Tests.Tests
 
             Assert.Equal(count + 1, AirTableClientFake.Data.Count);
             Assert.Same(last, insertedMessage);
+            Assert.Equal(insertedMessage.Id, UniqueIdGenerator.Last);
             Assert.Equal(newMessage.Title, last.Title);
             Assert.Equal(newMessage.Text, last.Text);
         }

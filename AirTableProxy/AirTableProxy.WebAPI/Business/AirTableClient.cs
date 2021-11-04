@@ -1,5 +1,6 @@
 ﻿using AirTableProxy.WebAPI.Business.Dtos.AirTableDtos;
 using AirTableProxy.WebAPI.Dtos.MessageDtos;
+using AirTableProxy.WebAPI.Utils;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -49,7 +50,7 @@ namespace AirTableProxy.WebAPI.Business
         public async Task<MessageResponse> AddMessage(MessageRequest message)
         {
             var msgFields = new MessageInfoDto(
-                Id: "1", // TODO generate ID
+                Id: UniqueIdGenerator.Generate(),
                 Summary: message.Title,
                 Message: message.Text,
                 ReceivedAt: DateTime.Now
